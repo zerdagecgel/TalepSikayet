@@ -4,7 +4,8 @@ import 'package:http/http.dart' as http;
 import 'register_page.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);  // key parametresi eklendi
+  const LoginPage({super.key});
+ // key parametresi eklendi
 
   @override
   _LoginPageState createState() => _LoginPageState();

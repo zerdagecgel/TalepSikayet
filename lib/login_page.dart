@@ -136,6 +136,10 @@ class _LoginPageState extends State<LoginPage> {
       if (data["basarili"] == true) {
         debugPrint("Giriş başarılı: $username");
         // Başarılıysa yönlendirme eklenebilir
+         Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => EmployeesPage()),
+        );
       } else {
         _showErrorDialog(data["mesaj"] ?? "Kullanıcı bilgileriniz hatalı!");
       }

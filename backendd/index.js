@@ -21,9 +21,6 @@ app.use(express.static(path.join(__dirname, 'proje')));
 app.use(express.static(path.join(__dirname, 'form')));
 
 
-
-
-
 app.get('/', (req, res) => {
   res.status(200).send({ message: 'Merhaba, bu bir Node.js uygulamasıdır!' });
 });
@@ -35,4 +32,3 @@ app.use((err, req, res, next) => {
   console.error("HATA:", err.stack);
   res.status(500).json({ status: 'error', message: 'Sunucu hatası!' });
 });
-

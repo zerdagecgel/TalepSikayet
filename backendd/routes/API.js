@@ -11,8 +11,8 @@ const SECRET_KEY = process.env.JWT_SECRET;
 
 
   function hataYaniti(res, mesaj = "Sunucu hatası") {
-  return res.status(500).json({ status: "error", message: mesaj });
-}
+    return res.status(500).json({ status: "error", message: mesaj });
+  }
 // Kayıt ol endpoint
   router.post('/register', (req, res) => {
   const { kullanici_adi, sifre, eposta, tam_adi, telefon } = req.body;
@@ -56,7 +56,7 @@ const SECRET_KEY = process.env.JWT_SECRET;
 // Giriş endpoint
 router.post('/login', (req, res) => {
   const { kullanici_adi, sifre } = req.body;
-  console.log("Giriş isteği alındı:", { kullanici_adi, sifre });
+  //console.log("Giriş isteği alındı:", { kullanici_adi, sifre });
 
   if (!kullanici_adi || !sifre) {
     return res.status(400).json({ basarili: false, mesaj: "Kullanıcı adı ve şifre gereklidir." });
@@ -82,12 +82,12 @@ router.post('/login', (req, res) => {
       }
 
       if (isMatch) {
-      const token = jwt.sign(
-    { id: user.id, kullanici_adi: user.kullanici_adi },
-    process.env.JWT_SECRET, //Burası sabit değil .env'den alınıyor
-    { expiresIn: '2h' })
-    
-    return res.status(200).json({ basarili: true, token: token, mesaj: "Giriş başarılı." });
+        const token = jwt.sign(
+        { id: user.id, kullanici_adi: user.kullanici_adi },
+        process.env.JWT_SECRET, //Burası sabit değil .env'den alınıyor
+        { expiresIn: '2h' })
+      
+        return res.status(200).json({ basarili: true, token: token, mesaj: "Giriş başarılı." });
  
       } else {
         return res.status(401).json({ basarili: false, mesaj: "Şifre yanlış." });

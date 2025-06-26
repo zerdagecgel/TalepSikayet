@@ -1,9 +1,10 @@
-  import 'package:flutter/material.dart';
-  import 'package:http/http.dart' as http;
-  import 'dart:convert';
-  
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
-  class RegisterPage extends StatefulWidget {
+
+
+class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
 
 
@@ -32,11 +33,11 @@ class _RegisterPageState extends State<RegisterPage> {
       }),
     );
     
-    
+
     final res = json.decode(response.body);
     if (res["status"] == "success") {
       if (!mounted) return;
-  ScaffoldMessenger.of(context).showSnackBar(
+ScaffoldMessenger.of(context).showSnackBar(
   SnackBar(content: Text("Kayıt başarılı")),
 );
 
@@ -44,7 +45,7 @@ class _RegisterPageState extends State<RegisterPage> {
     } else {
   final errorMessage = res["message"] ?? "Sunucudan bir hata yanıtı alınamadı.";
   if (!mounted) return;
-  ScaffoldMessenger.of(context).showSnackBar(
+ScaffoldMessenger.of(context).showSnackBar(
   SnackBar(content: Text("Hata: $errorMessage")),
 );
 
@@ -94,7 +95,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   }
                 },
                 child: Text("Kayıt Ol"),
-              )
+              ),
             ],
           ),
         ),

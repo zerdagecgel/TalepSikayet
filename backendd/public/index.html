@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Veriler Listesi</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    th, td {
+      border: 1px solid #aaa;
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    caption {
+      caption-side: top;
+      font-size: 1.5em;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Başvuru Verileri</h1>
+  <table id="veriTablosu">
+    <caption>Veritabanından Çekilen Kayıtlar</caption>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Başvuru No</th>
+        <th>Tipi</th>
+        <th>İçerik</th>
+        <th>İsim</th>
+        <th>Soyisim</th>
+        <th>Adres</th>
+        <th>Durum</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script>
+    fetch('http://localhost:3000/veriler')
+      .then(response => response.json())
+      .then(data => {
+        const tbody = document.querySelector('#veriTablosu tbody');
+        data.forEach(veri => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td>${veri.id}</td>
+            <td>${veri.basvuru_no}</td>
+            <td>${veri.basvuru_tipi}</td>
+            <td>${veri.icerik}</td>
+            <td>${veri.isim}</td>
+            <td>${veri.soyisim}</td>
+            <td>${veri.adres}</td>
+            <td>${veri.basvuru_durumu}</td>
+          `;
+          tbody.appendChild(row);
+        });
+      })
+      .catch(error => {
+        console.error('Veri çekme hatası:', error);
+        alert("Veriler alınamadı. Sunucu çalışıyor mu?");
+      });
+  </script>
+
+</body>
+</html>

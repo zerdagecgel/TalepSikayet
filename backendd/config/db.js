@@ -1,7 +1,8 @@
 const mysql = require('mysql');
 require('dotenv').config();
 
-const connection = mysql.createPool({
+// Bağlantı havuzu oluştur
+const pool = mysql.createPool({
   connectionLimit: 10,
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
@@ -9,12 +10,16 @@ const connection = mysql.createPool({
   database: process.env.DB_NAME,
 });
 
-connection.getConnection((err) => {
+// Bağlantıyı test et
+pool.getConnection((err, connection) => {
   if (err) {
-    console.error('MySQL bağlantı hatası:', err);
+    console.error('MySQL bağlantı hatası:', err.message);
   } else {
     console.log('MySQL bağlantısı başarılı.');
+    connection.release();
   }
 });
 
-module.exports = connection;
+// Dışa aktar
+module.exports = pool;
+// Bu kod, MySQL veritabanına bağlantı kurmak için bir bağlantı havuzu oluşturur.

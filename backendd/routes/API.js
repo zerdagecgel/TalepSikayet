@@ -5,10 +5,8 @@ const jwt = require('jsonwebtoken');
 const validator = require('validator');
 const authenticateToken = require('../middleware/auth');
 const connection = require('../config/db');
-
 require('dotenv').config();
 const SECRET_KEY = process.env.JWT_SECRET;
-
 
   function hataYaniti(res, mesaj = "Sunucu hatası") {
   return res.status(500).json({ status: "error", message: mesaj });

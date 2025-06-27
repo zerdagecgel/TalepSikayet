@@ -18,8 +18,6 @@ const router = require('./routes/API');
   //router.post('/sifre-sifirla',  (req, res) => {});
 
 
-
-
 app.use(cors());
 app.use(express.json());
 

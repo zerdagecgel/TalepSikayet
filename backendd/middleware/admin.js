@@ -1,11 +1,11 @@
  //Bu dosya bir middleware fonksiyonu export eder. 
   
- module.exports = (req, res, next) => {
-  if (req.user?.rol === 'admin') {
-    return next();
-  }
-  return res.status(403).json({ mesaj: "Yetkisiz erişim" });
-};
+  module.exports = (req, res, next) => {
+    if (req.user?.rol === 'admin') {
+      return next();
+    }
+    return res.status(403).json({ mesaj: "Yetkisiz erişim" });
+  };
 
 // Bu middleware, kullanıcının admin rolüne sahip olup olmadığını kontrol eder.Express middleware → req, res, next parametreli.
 

@@ -19,8 +19,10 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Şifremi Unuttum'),
-        backgroundColor: const Color.fromARGB(255, 91, 87, 87),
+        title: Text('Şifremi Unuttum',
+        selectionColor: Color(value),
+        ),
+        backgroundColor: const Color.fromARGB(255, 0, 1, 4),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -28,7 +30,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
           key: _formKey,
           child: Column(
             children: [
-              // ✅ E-posta Alanı
+
               TextFormField(
                 decoration: InputDecoration(
                   labelText: 'E-posta',
@@ -48,7 +50,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
               ),
               SizedBox(height: 20),
 
-              // ✅ Yeni Şifre Alanı
+       
               TextFormField(
                 obscureText: true,
                 decoration: InputDecoration(
@@ -65,7 +67,6 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
               ),
               SizedBox(height: 20),
 
-              // ✅ Yeni Şifre (Tekrar) Alanı
               TextFormField(
                 obscureText: true,
                 decoration: InputDecoration(
@@ -90,7 +91,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                 onPressed: _resetPassword,
                 child: Text('Şifreyi Değiştir'),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color.fromARGB(255, 42, 23, 146)
+                  backgroundColor: const Color.fromARGB(255, 118, 118, 119)
                 ),
               ),
             ],
@@ -100,12 +101,12 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     );
   }
 
-  // ✅ Şifre Değiştir Fonksiyonu (Backend'e istek gönderir)
+  
   void _resetPassword() async {
     if (_formKey.currentState!.validate()) {
       try {
         final response = await http.post(
-          Uri.parse('http://10.0.2.2:3000/reset-password'), // Backend URL
+          Uri.parse('http://10.0.2.2:3000/reset-password'), 
           headers: {"Content-Type": "application/json"},
           body: jsonEncode({
             "email": email,

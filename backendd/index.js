@@ -51,8 +51,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'proje')));
 app.use(express.static(path.join(__dirname, 'form')));
-
-
+app.use('/api', sifreRoutes)
 
 
 
@@ -68,3 +67,14 @@ app.use((err, req, res, next) => {
   res.status(500).json({ status: 'error', message: 'Sunucu hatası!' });
 });
 
+//Bu dosya Node.js uygulamasının giriş noktasıdır.
+
+//Temel middleware’ler kurulmuş, statik dosyalar servis ediliyor.
+
+//Swagger ile otomatik API dökümantasyonu hazırlanmış.
+
+//API rotaları /api altında kullanıma açılmış.
+
+//Hatalar merkezi bir yerde yakalanıp yönetiliyor.
+
+//Sunucu 3000 portunda başlatılıyor.

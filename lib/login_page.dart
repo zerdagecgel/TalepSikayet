@@ -17,6 +17,8 @@ class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   String? username;
   String? password;
+  String? rol;
+  
 
   @override
   Widget build(BuildContext context) {
@@ -30,14 +32,15 @@ class _LoginPageState extends State<LoginPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                SizedBox(height: 100),
+                const SizedBox(height: 100),
                 TextFormField(
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: const Color.fromARGB(255, 167, 154, 150)),
+                      borderSide:
+                          BorderSide(color: Color.fromARGB(255, 167, 154, 150)),
                     ),
                     labelText: 'Kullanıcı Adı',
-                    labelStyle: TextStyle(color: const Color.fromARGB(255, 40, 99, 148)),
+                    labelStyle: TextStyle(color: Color.fromARGB(255, 40, 99, 148)),
                     border: OutlineInputBorder(),
                   ),
                   validator: (value) {
@@ -50,10 +53,10 @@ class _LoginPageState extends State<LoginPage> {
                     username = value ?? '';
                   },
                 ),
-                SizedBox(height: 10.0),
+                const SizedBox(height: 10.0),
                 TextFormField(
                   obscureText: true,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.deepOrange),
                     ),
@@ -71,7 +74,7 @@ class _LoginPageState extends State<LoginPage> {
                     password = value ?? '';
                   },
                 ),
-                SizedBox(height: 20.0),
+                const SizedBox(height: 20.0),
                 _loginButton(),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -89,37 +92,56 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Widget _loginButton() => ElevatedButton(
-        child: Text("Giriş Yap"),
-        onPressed: () {
+        child: const Text("Giriş Yap"),
+        onPressed: () async {
           if (_formKey.currentState!.validate()) {
             _formKey.currentState!.save();
-            login();
-          }
-        },
+
+            final rol = await login();
+            debugPrint("Gelen rol: $rol"); // ← BURAYI EKLE
+
+            if (!context.mounted) return;
+
+            if (rol == 'admin') {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => EmployeesPage()),
+              );
+            } else if (rol == 'user') {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ForgotPasswordPage()),
+              );
+            } else if (rol == null) {
+              // zaten hata gösterildi
+            } else {
+              _showErrorDialog("Tanımsız kullanıcı rolü: $rol");
+            }
+        }},
       );
 
   Widget _registerButton() => ElevatedButton(
-        child: Text("Kayıt Ol"),
+        child: const Text("Kayıt Ol"),
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => RegisterPage()),
+            MaterialPageRoute(builder: (context) => const RegisterPage()),
           );
         },
       );
 
   Widget _forgotPasswordButton() => ElevatedButton(
-        child: Text("Şifremi Unuttum"),
+        child: const Text("Şifremi Unuttum"),
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => ForgotPasswordPage()),
+            MaterialPageRoute(builder: (context) => const ForgotPasswordPage()),
           );
         },
       );
 
-  Future<void> login() async {
-    final url = Uri.parse("http://10.0.2.2:3000/login");
+  Future<String?> login() async {
+    final url = Uri.parse("http://10.0.2.2:3000/api/login");
 
     try {
       final response = await http.post(
@@ -128,23 +150,21 @@ class _LoginPageState extends State<LoginPage> {
         body: jsonEncode({
           "kullanici_adi": username,
           "sifre": password,
+          "rol":rol
         }),
       );
 
       final data = jsonDecode(response.body);
 
       if (data["basarili"] == true) {
-        debugPrint("Giriş başarılı: $username");
-        // Başarılıysa yönlendirme eklenebilir
-         Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => EmployeesPage()),
-        );
+        return data["rol"] ?? "user";
       } else {
         _showErrorDialog(data["mesaj"] ?? "Kullanıcı bilgileriniz hatalı!");
+        return null;
       }
     } catch (e) {
       _showErrorDialog("Sunucuya bağlanılamadı: $e");
+      return null;
     }
   }
 
@@ -153,11 +173,11 @@ class _LoginPageState extends State<LoginPage> {
       context: context,
       barrierDismissible: false,
       builder: (context) => AlertDialog(
-        title: Text("Hata"),
+        title: const Text("Hata"),
         content: Text(message),
         actions: [
           TextButton(
-            child: Text("Tamam"),
+            child: const Text("Tamam"),
             onPressed: () => Navigator.pop(context),
           ),
         ],
@@ -165,6 +185,3 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
-
-
-

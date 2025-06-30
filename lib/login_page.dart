@@ -18,6 +18,10 @@ class _LoginPageState extends State<LoginPage> {
   String? username;
   String? password;
   String? rol;
+<<<<<<< Updated upstream
+=======
+  
+>>>>>>> Stashed changes
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +35,7 @@ class _LoginPageState extends State<LoginPage> {
             padding: const EdgeInsets.all(20.0),
             child: Column(
               children: <Widget>[
+<<<<<<< Updated upstream
                 const SizedBox(height: 20),
                 Image.asset(
                   'assets/mezitbellogo.png', 
@@ -44,6 +49,17 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     labelText: 'Kullanıcı Adı',
                     labelStyle: TextStyle(color: Color.fromARGB(255, 170, 171, 172)),
+=======
+                const SizedBox(height: 100),
+                TextFormField(
+                  decoration: const InputDecoration(
+                    focusedBorder: OutlineInputBorder(
+                      borderSide:
+                          BorderSide(color: Color.fromARGB(255, 167, 154, 150)),
+                    ),
+                    labelText: 'Kullanıcı Adı',
+                    labelStyle: TextStyle(color: Color.fromARGB(255, 40, 99, 148)),
+>>>>>>> Stashed changes
                     border: OutlineInputBorder(),
                   ),
                   validator: (value) {
@@ -95,16 +111,23 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Widget _loginButton() => ElevatedButton(
+<<<<<<< Updated upstream
         style: ElevatedButton.styleFrom(
           foregroundColor: Colors.black,
         ),
+=======
+>>>>>>> Stashed changes
         child: const Text("Giriş Yap"),
         onPressed: () async {
           if (_formKey.currentState!.validate()) {
             _formKey.currentState!.save();
 
             final rol = await login();
+<<<<<<< Updated upstream
             debugPrint("Gelen rol: $rol");
+=======
+            debugPrint("Gelen rol: $rol"); // ← BURAYI EKLE
+>>>>>>> Stashed changes
 
             if (!context.mounted) return;
 
@@ -116,13 +139,18 @@ class _LoginPageState extends State<LoginPage> {
             } else if (rol == 'user') {
               Navigator.push(
                 context,
+<<<<<<< Updated upstream
                 MaterialPageRoute(builder: (context) => ComplaintPage()),
+=======
+                MaterialPageRoute(builder: (context) => const ForgotPasswordPage()),
+>>>>>>> Stashed changes
               );
             } else if (rol == null) {
               // zaten hata gösterildi
             } else {
               _showErrorDialog("Tanımsız kullanıcı rolü: $rol");
             }
+<<<<<<< Updated upstream
           }
         },
       );
@@ -131,6 +159,12 @@ class _LoginPageState extends State<LoginPage> {
         style: ElevatedButton.styleFrom(
           foregroundColor: Colors.black,
         ),
+=======
+        }},
+      );
+
+  Widget _registerButton() => ElevatedButton(
+>>>>>>> Stashed changes
         child: const Text("Kayıt Ol"),
         onPressed: () {
           Navigator.push(
@@ -141,9 +175,12 @@ class _LoginPageState extends State<LoginPage> {
       );
 
   Widget _forgotPasswordButton() => ElevatedButton(
+<<<<<<< Updated upstream
         style: ElevatedButton.styleFrom(
           foregroundColor: Colors.black,
         ),
+=======
+>>>>>>> Stashed changes
         child: const Text("Şifremi Unuttum"),
         onPressed: () {
           Navigator.push(
@@ -163,6 +200,7 @@ class _LoginPageState extends State<LoginPage> {
         body: jsonEncode({
           "kullanici_adi": username,
           "sifre": password,
+          "rol":rol
         }),
       );
 

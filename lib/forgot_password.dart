@@ -104,7 +104,11 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     if (_formKey.currentState!.validate()) {
       try {
         final response = await http.post(
+<<<<<<< Updated upstream
           Uri.parse('http://10.0.2.2:3000/api/sifre-sifirla'),
+=======
+          Uri.parse('http://10.0.2.2:3000/api/reset-password'), // Backend URL
+>>>>>>> Stashed changes
           headers: {"Content-Type": "application/json"},
           body: jsonEncode({
             "kullanici_adi": username,

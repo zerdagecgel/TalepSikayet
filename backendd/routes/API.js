@@ -55,7 +55,12 @@ router.post('/register', (req, res) => {
 // Giriş
 router.post('/login', (req, res) => {
   const { kullanici_adi, sifre } = req.body;
+<<<<<<< Updated upstream
 
+=======
+  console.log("Giriş isteği alındı:", { kullanici_adi, sifre });
+ 
+>>>>>>> Stashed changes
   if (!kullanici_adi || !sifre) {
     return res.status(400).json({ basarili: false, mesaj: "Kullanıcı adı ve şifre gereklidir." });
   }

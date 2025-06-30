@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
+import 'login_page.dart';
 class Complaint {
   final int id;
   final String baslik;
@@ -53,7 +53,7 @@ class _EmployeesPageState extends State<EmployeesPage> {
 
   Future<void> fetchComplaints() async {
     setState(() => isLoading = true);
-    final url = Uri.parse('http://10.0.2.2:3000/complaints');
+    final url = Uri.parse('http://10.0.2.2:3000/api/complaints');
     try {
       final response = await http.get(url);
       if (response.statusCode == 200) {
@@ -72,7 +72,7 @@ class _EmployeesPageState extends State<EmployeesPage> {
   }
 
   Future<void> markAsCompleted(int id) async {
-    final url = Uri.parse('http://10.0.2.2:3000/complaints/$id');
+    final url = Uri.parse('http://10.0.2.2:3000/api/complaints/$id');
     try {
       final response = await http.put(url,
           headers: {"Content-Type": "application/json"},
@@ -114,7 +114,7 @@ class _EmployeesPageState extends State<EmployeesPage> {
           filter = label;
         });
       },
-      // Güncelledim: buton rengi turuncu yerine gri tonlarına çevrildi
+     
       style: ElevatedButton.styleFrom(
         backgroundColor: filter == label ? Colors.grey[700] : Colors.grey[400],
       ),
@@ -126,10 +126,21 @@ class _EmployeesPageState extends State<EmployeesPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       // Güncelledim: AppBar rengi turuncu yerine gri yapıldı
-      appBar: AppBar(
-        title: Text("Talepler/Şikayetler"),
-        backgroundColor: Colors.grey[800],
-      ),
+     appBar: AppBar(
+  title: const Text("Talepler/Şikayetler"),
+  backgroundColor: const Color.fromARGB(255, 255, 248, 248),
+  leading: IconButton(
+    icon: const Icon(Icons.arrow_back),
+    tooltip: 'Geri',
+    onPressed: () {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const LoginPage()),
+      );
+    },
+  ),
+),
+
       body: Padding(
         padding: const EdgeInsets.all(12.0),
         child: Column(

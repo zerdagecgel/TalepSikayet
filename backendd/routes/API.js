@@ -56,7 +56,12 @@ router.post('/register', (req, res) => {
 router.post('/login', (req, res) => {
   const { kullanici_adi, sifre } = req.body;
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 
+=======
+  console.log("Giriş isteği alındı:", { kullanici_adi, sifre });
+ 
+>>>>>>> Stashed changes
 =======
   console.log("Giriş isteği alındı:", { kullanici_adi, sifre });
  

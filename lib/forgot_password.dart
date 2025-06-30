@@ -105,7 +105,11 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
       try {
         final response = await http.post(
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
           Uri.parse('http://10.0.2.2:3000/api/sifre-sifirla'),
+=======
+          Uri.parse('http://10.0.2.2:3000/api/reset-password'), // Backend URL
+>>>>>>> Stashed changes
 =======
           Uri.parse('http://10.0.2.2:3000/api/reset-password'), // Backend URL
 >>>>>>> Stashed changes

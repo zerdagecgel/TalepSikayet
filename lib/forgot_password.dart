@@ -11,7 +11,7 @@ class ForgotPasswordPage extends StatefulWidget {
 
 class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   final _formKey = GlobalKey<FormState>();
-  String? email;
+  String? username;
   String? newPassword;
   String? confirmPassword;
 
@@ -19,10 +19,8 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Şifremi Unuttum',
-        selectionColor: Color(value),
-        ),
-        backgroundColor: const Color.fromARGB(255, 0, 1, 4),
+        title: Text('Şifremi Unuttum'),
+        backgroundColor: const Color.fromARGB(255, 99, 156, 213),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -33,24 +31,25 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
 
               TextFormField(
                 decoration: InputDecoration(
-                  labelText: 'E-posta',
+                  labelText: 'Kullanıcı Adı',
                   border: OutlineInputBorder(),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black, width: 2),
+                  ),
                 ),
-                keyboardType: TextInputType.emailAddress,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Lütfen e-posta adresinizi giriniz';
+                    return 'Lütfen kullanıcı adınızı giriniz';
                   }
-                  if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
-                    return 'Geçerli bir e-posta adresi giriniz';
-                  }
-                  email = value;
+                  username = value;
                   return null;
                 },
               ),
               SizedBox(height: 20),
 
-       
               TextFormField(
                 obscureText: true,
                 decoration: InputDecoration(
@@ -86,12 +85,12 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
               ),
               SizedBox(height: 30),
 
-              // ✅ Şifreyi Değiştir Butonu
               ElevatedButton(
                 onPressed: _resetPassword,
                 child: Text('Şifreyi Değiştir'),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color.fromARGB(255, 118, 118, 119)
+                  backgroundColor: const Color.fromARGB(255, 247, 247, 255),
+                  foregroundColor: Colors.black,
                 ),
               ),
             ],
@@ -101,16 +100,15 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     );
   }
 
-  
   void _resetPassword() async {
     if (_formKey.currentState!.validate()) {
       try {
         final response = await http.post(
-          Uri.parse('http://10.0.2.2:3000/reset-password'), 
+          Uri.parse('http://10.0.2.2:3000/api/sifre-sifirla'),
           headers: {"Content-Type": "application/json"},
           body: jsonEncode({
-            "email": email,
-            "newPassword": newPassword,
+            "kullanici_adi": username,
+            "yeni_sifre": newPassword,
           }),
         );
 
@@ -162,4 +160,3 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     );
   }
 }
- 

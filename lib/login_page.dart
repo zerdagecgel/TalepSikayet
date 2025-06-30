@@ -18,11 +18,11 @@ class _LoginPageState extends State<LoginPage> {
   String? username;
   String? password;
   String? rol;
-  
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       resizeToAvoidBottomInset: true,
       body: Form(
         key: _formKey,
@@ -30,17 +30,20 @@ class _LoginPageState extends State<LoginPage> {
           child: Padding(
             padding: const EdgeInsets.all(20.0),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                const SizedBox(height: 100),
+                const SizedBox(height: 20),
+                Image.asset(
+                  'assets/mezitbellogo.png', 
+                  height: 100,
+                ),
+                const SizedBox(height: 30),
                 TextFormField(
                   decoration: const InputDecoration(
                     focusedBorder: OutlineInputBorder(
-                      borderSide:
-                          BorderSide(color: Color.fromARGB(255, 167, 154, 150)),
+                      borderSide: BorderSide(color: Color.fromARGB(255, 0, 0, 0)),
                     ),
                     labelText: 'Kullanıcı Adı',
-                    labelStyle: TextStyle(color: Color.fromARGB(255, 40, 99, 148)),
+                    labelStyle: TextStyle(color: Color.fromARGB(255, 170, 171, 172)),
                     border: OutlineInputBorder(),
                   ),
                   validator: (value) {
@@ -58,10 +61,10 @@ class _LoginPageState extends State<LoginPage> {
                   obscureText: true,
                   decoration: const InputDecoration(
                     focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.deepOrange),
+                      borderSide: BorderSide(color: Color.fromARGB(255, 0, 0, 0)),
                     ),
                     labelText: 'Şifre',
-                    labelStyle: TextStyle(color: Colors.deepOrange),
+                    labelStyle: TextStyle(color: Color.fromARGB(255, 170, 171, 172)),
                     border: OutlineInputBorder(),
                   ),
                   validator: (value) {
@@ -92,13 +95,16 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Widget _loginButton() => ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          foregroundColor: Colors.black,
+        ),
         child: const Text("Giriş Yap"),
         onPressed: () async {
           if (_formKey.currentState!.validate()) {
             _formKey.currentState!.save();
 
             final rol = await login();
-            debugPrint("Gelen rol: $rol"); // ← BURAYI EKLE
+            debugPrint("Gelen rol: $rol");
 
             if (!context.mounted) return;
 
@@ -110,17 +116,21 @@ class _LoginPageState extends State<LoginPage> {
             } else if (rol == 'user') {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => ForgotPasswordPage()),
+                MaterialPageRoute(builder: (context) => ComplaintPage()),
               );
             } else if (rol == null) {
               // zaten hata gösterildi
             } else {
               _showErrorDialog("Tanımsız kullanıcı rolü: $rol");
             }
-        }},
+          }
+        },
       );
 
   Widget _registerButton() => ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          foregroundColor: Colors.black,
+        ),
         child: const Text("Kayıt Ol"),
         onPressed: () {
           Navigator.push(
@@ -131,6 +141,9 @@ class _LoginPageState extends State<LoginPage> {
       );
 
   Widget _forgotPasswordButton() => ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          foregroundColor: Colors.black,
+        ),
         child: const Text("Şifremi Unuttum"),
         onPressed: () {
           Navigator.push(
@@ -150,7 +163,6 @@ class _LoginPageState extends State<LoginPage> {
         body: jsonEncode({
           "kullanici_adi": username,
           "sifre": password,
-          "rol":rol
         }),
       );
 

@@ -21,7 +21,7 @@ class _RegisterPageState extends State<RegisterPage> {
   
 
   Future<void> register() async {
-    final url = Uri.parse("http://10.0.2.2:3000/register"); // IP'ni kontrol et
+    final url = Uri.parse("http://10.0.2.2:3000/api/register"); // IP'ni kontrol et
     final response = await http.post(
       url,
       headers: {"Content-Type": "application/json"},
@@ -57,7 +57,10 @@ ScaffoldMessenger.of(context).showSnackBar(
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Kayıt Ol")),
+      appBar: AppBar(
+        title: Text("Kayıt Ol"),
+        backgroundColor: Color.fromARGB(255, 99, 156, 213),
+        ),
       body: Padding(
         padding: EdgeInsets.all(16),
         child: Form(
@@ -94,6 +97,9 @@ ScaffoldMessenger.of(context).showSnackBar(
                     register();
                   }
                 },
+                 style: ElevatedButton.styleFrom(
+    foregroundColor: Colors.black, // yazı rengini siyah yap
+  ),
                 child: Text("Kayıt Ol"),
               ),
             ],

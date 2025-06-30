@@ -22,10 +22,11 @@ class Complaint {
   factory Complaint.fromJson(Map<String, dynamic> json) {
     return Complaint(
       id: json['id'],
-      baslik: json['baslik'],
+      baslik: json['tur'],
       aciklama: json['aciklama'],
       tamamlandi: json['tamamlandi'] == 1,
-      departman: json['departman'],  
+      departman: json['adres'],
+        
     );
   }
 }

@@ -69,13 +69,13 @@ router.post('/login', (req, res) => {
     }
 
     const user = results[0];
-
+    console.log(user)
     bcrypt.compare(sifre, user.sifre_hash, (err, isMatch) => {
       if (err) return hataYaniti(res);
 
       if (isMatch) {
         const token = jwt.sign({ id: user.id, kullanici_adi: user.kullanici_adi }, SECRET_KEY, { expiresIn: '2h' });
-        return res.status(200).json({ basarili: true, token, mesaj: "Giriş başarılı." });
+        return res.status(200).json({ basarili: true, token,rol:user.rol, mesaj: "Giriş başarılı." });
       } else {
         return res.status(401).json({ basarili: false, mesaj: "Şifre yanlış." });
       }

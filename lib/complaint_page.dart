@@ -2,14 +2,14 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-class FeedbackPage extends StatefulWidget {
-  const FeedbackPage({super.key});
+class ComplaintPage extends StatefulWidget {
+  const ComplaintPage ({super.key});
 
   @override
-  State<FeedbackPage> createState() => _FeedbackPageState();
+  State<ComplaintPage> createState() => _ComplaintPageState();
 }
 
-class _FeedbackPageState extends State<FeedbackPage> {
+class _ComplaintPageState extends State<ComplaintPage> {
   final _formKey = GlobalKey<FormState>();
   String _selectedType = 'Talep';
   String? _subject;

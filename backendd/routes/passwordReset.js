@@ -60,7 +60,7 @@ const connection = require('../config/db');
 // Şifre sıfırlama endpoint
 router.post('/sifre-sifirla', (req, res) => {
   const { kullanici_adi, yeni_sifre } = req.body;
-
+console.log(kullanici_adi,yeni_sifre)
   if (!kullanici_adi || !yeni_sifre) {
     return res.status(400).json({ mesaj: 'Kullanıcı adı ve yeni şifre gerekli.' });
   }
@@ -81,7 +81,7 @@ router.post('/sifre-sifirla', (req, res) => {
       connection.query('UPDATE kullanici SET sifre_hash = ? WHERE kullanici_adi = ?', [hash, kullanici_adi], (err) => {
         if (err) return res.status(500).json({ mesaj: 'Şifre güncellenemedi.' });
 
-        res.json({ mesaj: 'Şifre başarıyla sıfırlandı.' });
+        res.json({ success:true,mesaj: 'Şifre başarıyla sıfırlandı.' });
       });
     });
   });
